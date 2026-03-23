@@ -5,16 +5,15 @@
         bottom: 10px;         /* отступ снизу */
         left: 10px;           /* отступ слева */
         font-size: 12px;
-        color: #666;
+        color: #666;          /* постоянный цвет */
         text-decoration: none;
         z-index: 1000;
         animation: pulse 2s ease-in-out infinite; /* пульсация */
-        transition: transform 0.3s ease, color 0.3s ease;
+        transition: transform 0.3s ease;          /* плавное увеличение при наведении */
     }
 
     .author-link:hover {
-        color: #1e90ff;
-        transform: scale(1.1);
+        transform: scale(1.1); /* лёгкое увеличение */
     }
 
     @keyframes pulse {
