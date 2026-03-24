@@ -8,6 +8,10 @@ html, body {
     margin: 0;
     padding: 0;
     min-height: 100%;
+    overflow: hidden; /* запрет прокрутки */
+}
+
+body {
     background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
     font-family: Arial, sans-serif;
     display: flex;
@@ -19,7 +23,7 @@ html, body {
 .top-menu {
     display: flex;
     gap: 50px;
-    margin: 10px 0 0 0;
+    margin: 0; /* убрали отступ сверху и снизу */
 }
 
 .menu-group {
@@ -97,11 +101,23 @@ html, body {
 #vplayer001e157d {
     width: 1000px;
     max-width: 90%;
-    margin: 0 auto;
+    margin: 0 auto; /* убрали отступы сверху и снизу */
     padding: 15px;
     background: linear-gradient(145deg, #dcdcdc, #bfbfbf);
     border-radius: 12px;
     box-shadow: 6px 6px 12px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5);
+}
+
+/* ----------------- Чат ----------------- */
+#volnorez_chat {
+    width: 1000px;
+    max-width: 90%;
+    height: 350px;
+    margin: 0 auto; /* убрали отступ сверху */
+    background: linear-gradient(145deg, #e8e8e8, #d6d6d6);
+    border-radius: 12px;
+    box-shadow: 6px 6px 12px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5);
+    overflow-y: auto;
 }
 
 /* ----------------- Нижняя панель автора ----------------- */
@@ -110,10 +126,11 @@ html, body {
     justify-content: flex-start;
     width: 1000px;
     max-width: 90%;
-    margin: 0 auto 20px;
+    margin: 20px auto 40px;
     font-size: 12px;
 }
 
+/* ----------------- Анимация градиентного перелива ----------------- */
 .author-text {
     font-weight: bold;
     background: linear-gradient(90deg, #888, #fff, #888);
@@ -161,13 +178,14 @@ html, body {
 
 <!-- ----------------- ЧАТ ----------------- -->
 <div id="volnorez_chat"
-     style="width: 100%; max-width: 1000px; height: 500px; margin: 10px auto;"
+     style="width: 100%; max-width: 1000px; height: 500px; margin: 0 auto;"
      data-code="001e157d"
      data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
      data-skin="skin_4">
 </div>
 
 <script async src="//volnorez.com/plugins/jscode/chat_js"></script>
+
 <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
 <script>
 vkBridge.send('VKWebAppInit');
