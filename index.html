@@ -1,37 +1,184 @@
-<!-- -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>ПыЛь_ДоРоГ FM</title>
 <style>
-    .author-link {
-        position: fixed;      /* фиксируем на экране */
-        bottom: 10px;         /* отступ снизу */
-        left: 10px;           /* отступ слева */
-        font-size: 12px;
-        color: #666;          /* постоянный цвет */
-        text-decoration: none;
-        z-index: 1000;
-        animation: pulse 2s ease-in-out infinite; /* пульсация */
-        transition: transform 0.3s ease;          /* плавное увеличение при наведении */
-    }
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    overflow: hidden; /* запрещаем прокрутку */
+}
 
-    .author-link:hover {
-        transform: scale(1.1); /* лёгкое увеличение */
-    }
+body {
+    background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    @keyframes pulse {
-        0%   { opacity: 0.6; }
-        50%  { opacity: 1; }
-        100% { opacity: 0.6; }
-    }
+/* ----------------- ВЕРХНЕЕ МЕНЮ ----------------- */
+.top-menu {
+    display: flex;
+    gap: 50px;
+    margin: 20px 0;
+}
+
+.menu-group {
+    position: relative;
+}
+
+.menu-button {
+    position: relative;
+    padding: 8px 20px 8px 12px;
+    min-width: 180px;
+    height: 40px;
+    background: linear-gradient(145deg, #d6d6d6, #f0f0f0);
+    color: #333;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.2), -3px -3px 6px rgba(255,255,255,0.5);
+    transition: all 0.2s ease;
+}
+
+.menu-button::after {
+    content: '▾';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease;
+    color: #666;
+}
+
+.dropdown {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 8px;
+    flex-direction: column;
+    min-width: 220px;
+    box-shadow: 6px 6px 12px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 999;
+}
+
+.menu-group.active .dropdown {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-group.active .menu-button::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.menu-item {
+    padding: 10px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+}
+
+.menu-item:hover,
+.menu-item:focus,
+.menu-item:active {
+    background: linear-gradient(145deg, #e0e0e0, #f0f0f0);
+}
+
+/* ----------------- Плеер ----------------- */
+#vplayer001e157d {
+    width: 1000px;
+    max-width: 90%;
+    margin: 10px auto;
+    padding: 15px;
+    background: linear-gradient(145deg, #dcdcdc, #bfbfbf);
+    border-radius: 12px;
+    box-shadow: 6px 6px 12px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5);
+}
+
+/* ----------------- Чат ----------------- */
+#volnorez_chat {
+    width: 1000px;
+    max-width: 90%;
+    height: 350px;
+    margin: 10px auto;
+    background: linear-gradient(145deg, #e8e8e8, #d6d6d6);
+    border-radius: 12px;
+    box-shadow: 6px 6px 12px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5);
+    overflow-y: auto;
+}
+
+/* ----------------- Нижняя панель автора ----------------- */
+.author-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 1000px;
+    max-width: 90%;
+    margin: 20px auto 40px;
+    font-size: 12px;
+}
+
+/* ----------------- Анимация градиентного перелива ----------------- */
+.author-text {
+    font-weight: bold;
+    background: linear-gradient(90deg, #888, #fff, #888);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 4s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+}
 </style>
+</head>
+<body>
 
-<div style="display: flex; justify-content: center;">
-  <div id="vplayer001e157d" style="width: 1000px;">
-    <a href="http://volnorez.com/pyl_dorog-fm" title="радио ПыЛь_ДоРоГ FM">радио ПыЛь_ДоРоГ FM</a>
-    <script async type="text/javascript" src="//volnorez.com/plugins/jscode/player_js/001e157d/%7B%22share%22%3A%22source%22%2C%22skin%22%3A%22skin2%22%2C%22style%22%3A%7B%22bg_clr%22%3A%22237%2C237%2C237%22%2C%22b_clr%22%3A%22179%2C179%2C179%22%2C%22icon_clr%22%3A%2266%2C66%2C66%22%2C%22ch%22%3A%2237%22%2C%22bg_clr1%22%3A%22243%2C243%2C243%22%2C%22bg_clr2%22%3A%22196%2C196%2C196%22%2C%22bg_clr3%22%3A%22183%2C183%2C183%22%2C%22bg_clr4%22%3A%22167%2C167%2C167%22%2C%22txt_clr%22%3A%22205%2C209%2C205%22%7D%7D"></script>
-  </div>
+<!-- ----------------- МЕНЮ ----------------- -->
+<div class="top-menu">
+    <div class="menu-group">
+        <button class="menu-button">Перейти на Волнорез</button>
+        <div class="dropdown">
+            <button class="menu-item" onclick="window.open('https://volnorez.com/pyl_dorog-fm','_blank')">💻 Обычный сайт</button>
+            <button class="menu-item" onclick="window.open('https://m.volnorez.com/pyl_dorog-fm','_blank')">📱 Мобильная версия</button>
+        </div>
+    </div>
+
+    <div class="menu-group">
+        <button class="menu-button">Разное</button>
+        <div class="dropdown">
+            <button class="menu-item" onclick="window.open('https://vk.com/dust_dorogfm','_blank')">📢 Группа ПыЛь_ДоРоГ FM</button>
+            <button class="menu-item" onclick="window.open('https://vk.com/topic-227352123_52478122','_blank')">📝 Книга жалоб и предложений</button>
+            <button class="menu-item" onclick="window.open('https://vk.com/topic-227352123_52496434','_blank')">🎵 Стол заказов</button>
+        </div>
+    </div>
 </div>
 
+<!-- ----------------- Плеер ----------------- -->
+<div id="vplayer001e157d">
+    <a href="http://volnorez.com/pyl_dorog-fm">радио ПыЛь_ДоРоГ FM</a>
+    <script async type="text/javascript"
+        src="//volnorez.com/plugins/jscode/player_js/001e157d/%7B%22share%22%3A%22source%22%2C%22skin%22%3A%22skin2%22%2C%22style%22%3A%7B%22bg_clr%22%3A%22237%2C237%2C237%22%2C%22b_clr%22%3A%22179%2C179%2C179%22%2C%22icon_clr%22%3A%2266%2C66%2C66%22%2C%22ch%22%3A%2237%22%2C%22bg_clr1%22%3A%22243%2C243%2C243%22%2C%22bg_clr2%22%3A%22196%2C196%2C196%22%2C%22bg_clr3%22%3A%22183%2C183%2C183%22%2C%22bg_clr4%22%3A%22167%2C167%2C167%22%2C%22txt_clr%22%3A%22205%2C209%2C205%22%7D%7D">
+    </script>
+</div>
+
+<!-- ----------------- ЧАТ ----------------- -->
 <div id="volnorez_chat"
-     style="width: 100%; max-width: 1000px; height: 500px; margin: 0 auto;"
+     style="width: 100%; max-width: 1000px; height: 500px; margin: 10px auto;"
      data-code="001e157d"
      data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
      data-skin="skin_4">
@@ -39,13 +186,33 @@
 
 <script async src="//volnorez.com/plugins/jscode/chat_js"></script>
 
-<!-- VK Bridge -->
-    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
-    <script>
-        vkBridge.send('VKWebAppInit');
-    </script>
-<!-- -->
-    <a href="https://vk.com/muzer_play" target="_blank" class="author-link">Автор приложения в VK</a>
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+<script>
+vkBridge.send('VKWebAppInit');
+</script>
+
+<!-- ----------------- Нижняя панель автора ----------------- -->
+<div class="author-container">
+    <a href="https://vk.com/muzer_play" target="_blank" class="author-text">
+        Автор приложения в VK
+    </a>
+</div>
+
+<!-- ----------------- Медленное открытие/закрытие меню ----------------- -->
+<script>
+document.querySelectorAll('.menu-group').forEach(group => {
+    let timer;
+    group.addEventListener('mouseenter', () => {
+        clearTimeout(timer);
+        group.classList.add('active');
+    });
+    group.addEventListener('mouseleave', () => {
+        timer = setTimeout(() => {
+            group.classList.remove('active');
+        }, 400);
+    });
+});
+</script>
+
 </body>
 </html>
-
