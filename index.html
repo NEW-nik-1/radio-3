@@ -8,7 +8,7 @@ html, body {
     margin: 0;
     padding: 0;
     min-height: 100%;
-    overflow: hidden; /* запрет прокрутки */
+    overflow: hidden; /* запрет прокрутки страницы */
 }
 
 body {
@@ -17,13 +17,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100vh; /* используем всю высоту окна */
 }
 
 /* ----------------- ВЕРХНЕЕ МЕНЮ ----------------- */
 .top-menu {
     display: flex;
     gap: 50px;
-    margin: 0; /* убрали отступ сверху и снизу */
+    margin: 0; /* убрали отступы */
 }
 
 .menu-group {
@@ -101,7 +102,7 @@ body {
 #vplayer001e157d {
     width: 1000px;
     max-width: 90%;
-    margin: 0 auto; /* убрали отступы сверху и снизу */
+    margin: 0; /* убрали отступы */
     padding: 15px;
     background: linear-gradient(145deg, #dcdcdc, #bfbfbf);
     border-radius: 12px;
@@ -112,12 +113,12 @@ body {
 #volnorez_chat {
     width: 1000px;
     max-width: 90%;
-    height: 350px;
-    margin: 0 auto; /* убрали отступ сверху */
+    flex-grow: 1; /* чат занимает оставшееся пространство */
+    margin: 0;
     background: linear-gradient(145deg, #e8e8e8, #d6d6d6);
     border-radius: 12px;
     box-shadow: 6px 6px 12px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5);
-    overflow-y: auto;
+    overflow: hidden; /* убрали прокрутку */
 }
 
 /* ----------------- Нижняя панель автора ----------------- */
@@ -126,7 +127,7 @@ body {
     justify-content: flex-start;
     width: 1000px;
     max-width: 90%;
-    margin: 20px auto 40px;
+    margin: 10px auto 10px;
     font-size: 12px;
 }
 
@@ -178,7 +179,6 @@ body {
 
 <!-- ----------------- ЧАТ ----------------- -->
 <div id="volnorez_chat"
-     style="width: 100%; max-width: 1000px; height: 400px; margin: 0 auto;"
      data-code="001e157d"
      data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
      data-skin="skin_4">
