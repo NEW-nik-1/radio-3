@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Radio FINAL + COLOR TEXT</title>
+<title>Radio FINAL + CHAT FIX</title>
 
 <style>
 :root{
@@ -43,7 +43,6 @@ body{
   border:1px solid var(--border);
 }
 
-/* BUTTONS */
 button{
   background:var(--btn);
   border:1px solid #555;
@@ -52,11 +51,11 @@ button{
   cursor:pointer;
   width:36px;
   height:36px;
-  padding:0;
   display:flex;
   align-items:center;
   justify-content:center;
 }
+
 button:hover{background:var(--btn2);}
 
 .left-controls{
@@ -66,28 +65,19 @@ button:hover{background:var(--btn2);}
   position:relative;
 }
 
-/* COLOR UI */
 .color-panel{
   display:flex;
   align-items:center;
   gap:6px;
   font-size:10px;
-  color:#333;
-}
-
-.color-panel span{
-  font-size:9px;
-  opacity:0.8;
 }
 
 .color-panel input{
   width:22px;
   height:22px;
   border:none;
-  background:none;
 }
 
-/* MENU */
 .dropdown{
   position:absolute;
   top:55px;
@@ -100,13 +90,14 @@ button:hover{background:var(--btn2);}
   min-width:160px;
   z-index:9999;
 }
+
 .dropdown a{
   padding:8px;
   color:#fff;
   text-decoration:none;
   font-size:12px;
 }
-.dropdown a:hover{background:#3a3a3a;}
+
 .hidden{display:none;}
 
 .center{
@@ -124,12 +115,10 @@ canvas{
   border-radius:6px;
 }
 
-/* TRACK */
 .track{
   font-size:10px;
   overflow:hidden;
   white-space:nowrap;
-  opacity:0.9;
 }
 
 .track-inner{
@@ -143,30 +132,18 @@ canvas{
   100%{transform:translateX(-100%);}
 }
 
-/* RIGHT */
 .right{
   display:flex;
   flex-direction:column;
   font-size:10px;
   min-width:180px;
-  opacity:0.9;
 }
 
-/* VOLUME */
 #volume{
   writing-mode:bt-lr;
   -webkit-appearance:slider-vertical;
   height:42px;
   accent-color:var(--accent);
-}
-
-/* CHAT */
-.chat{
-  height:360px;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:10px;
 }
 
 /* EQ */
@@ -186,63 +163,39 @@ canvas{
   color:#fff;
 }
 
-.eq-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
+/* CHAT */
+.chat-box{
+  width:100%;
+  height:100px;          /* 👈 ВЫСОТА */
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
 }
 
-.eq-scroll{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
+/* 👇 ВАЖНО — принудительно растягиваем iframe */
+.chat-box iframe{
+  width:100% !important;
+  height:100% !important;
+  min-height:100px !important;
 }
 
-.eq-band{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  font-size:10px;
+@media (max-width:600px){
+  .chat-box,
+  .chat-box iframe{
+    height:300px !important;
+    min-height:300px !important;
+  }
 }
 
-.eq-band input{
-  writing-mode:bt-lr;
-  -webkit-appearance:slider-vertical;
-  height:80px;
-  accent-color:var(--accent);
-}
-
-/* ===================== */
-/* 👇 АВТОР (НОВОЕ) */
-/* ===================== */
-
+/* AUTHOR */
 .author{
   position:fixed;
   bottom:6px;
   left:10px;
   font-size:9px;
-  opacity:0.8;
-  z-index:9999;
 }
 
-.author a{
-  text-decoration:none;
-  background: linear-gradient(90deg, #ffffff, #2b2b2b, #ffffff);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: authorMove 6s linear infinite;
-}
-
-@keyframes authorMove{
-  0%{background-position:0% 50%;}
-  100%{background-position:200% 50%;}
-}
-
-.author:hover{
-  opacity:1;
-}
 </style>
 </head>
 
@@ -258,27 +211,22 @@ canvas{
     <button id="eqBtn">EQ</button>
 
     <div class="color-panel">
-      <span>сменить цвет визуализации</span>
       <input type="color" id="lowColor" value="#00bfa5">
       <input type="color" id="midColor" value="#4da6ff">
       <input type="color" id="highColor" value="#ff4d4d">
     </div>
 
     <div id="menu" class="dropdown hidden">
-      <a href="https://volnorez.com/pyl_dorog-f" target="_blank" rel="noopener noreferrer">💻 Обычный сайт</a>
-      <a href="https://m.volnorez.com/pyl_dorog-fm" target="_blank" rel="noopener noreferrer">📱 Мобильная версия</a>
-      <a href="https://vk.com/dust_dorogfm" target="_blank" rel="noopener noreferrer">📢 Группа ПыЛь_ДоРоГ FM</a>
-      <a href="https://vk.com/topic-227352123_52496434" target="_blank" rel="noopener noreferrer">🎵 Стол заказов</a>
-      <a href="https://vk.com/topic-227352123_52478122" target="_blank" rel="noopener noreferrer">📝 Книга жалоб и предложений</a>
+      <a href="https://volnorez.com/pyl_dorog-f">Сайт</a>
+      <a href="https://m.volnorez.com/pyl_dorog-fm">Моб версия</a>
     </div>
 
   </div>
 
   <div class="center">
     <canvas id="viz"></canvas>
-
     <div class="track">
-      <div id="trackText" class="track-inner">Ожидание трека...</div>
+      <div id="trackText" class="track-inner">Ожидание...</div>
     </div>
   </div>
 
@@ -286,237 +234,33 @@ canvas{
     <div>🎙 <span id="dj">LIVE</span></div>
     <div>👥 <span id="listeners">0</span></div>
     <div>📡 <span id="status">OFF</span></div>
-    <div>📝 <span id="airDesc">.нет</span></div>
   </div>
 
-  <input id="volume" type="range" min="0" max="1" step="0.01" value="0.7">
+  <input id="volume" type="range" min="0" max="1" step="0.01">
 
-  <audio id="audio" crossorigin="anonymous"></audio>
-
-</div>
-
-<div class="chat">
-  <div id="volnorez_chat" data-code="001f69a7"></div>
-  <script async src="//volnorez.com/plugins/jscode/chat_js"></script>
-</div>
+  <audio id="audio"></audio>
 
 </div>
 
-<div class="eq-window" id="eqWindow">
-  <div class="eq-header">
-    <div>🎚 EQ 12 Band</div>
-    <button id="closeEq">❌</button>
-  </div>
-  <div class="eq-scroll" id="eqBands"></div>
+<!-- 👇 ЧАТ -->
+<div id="volnorez_chat"
+     class="chat-box"
+     data-code="001e157d"
+     data-skin="skin_4">
+ <script async src="//volnorez.com/plugins/jscode/chat_js"></script>
 </div>
 
-<!-- 👇 АВТОР -->
-<div class="author">
-  <a href="https://example.com" target="_blank" rel="noopener noreferrer">
-    Автор приложения
-  </a>
 </div>
-
-<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
-<script>
-vkBridge.send('VKWebAppInit');
-</script>
 
 <script>
-const STREAM = "https://stream.volnorez.com/live-app/869683?br=128";
-const WS_URL = "wss://s05.volnorez.com:443/live-app/869683";
-
-const audio = document.getElementById("audio");
-const canvas = document.getElementById("viz");
-const c = canvas.getContext("2d");
-
-const toggleBtn = document.getElementById("toggleBtn");
-const menuBtn = document.getElementById("menuBtn");
-const eqBtn = document.getElementById("eqBtn");
-const eqWindow = document.getElementById("eqWindow");
-const closeEq = document.getElementById("closeEq");
-
-const statusEl = document.getElementById("status");
-const dj = document.getElementById("dj");
-const listeners = document.getElementById("listeners");
-const airDesc = document.getElementById("airDesc");
-const volume = document.getElementById("volume");
-const trackText = document.getElementById("trackText");
-
-const lowColor = document.getElementById("lowColor");
-const midColor = document.getElementById("midColor");
-const highColor = document.getElementById("highColor");
-
-let ctx, source, analyser, data, filters = [];
-
-const freqs=[32,64,125,250,500,1000,2000,3000,4000,6000,8000,12000];
-
-function initAudio(){
-  if(ctx) return;
-
-  ctx=new AudioContext();
-  source=ctx.createMediaElementSource(audio);
-  analyser=ctx.createAnalyser();
-
-  let prev=source;
-
-  freqs.forEach(f=>{
-    const filter=ctx.createBiquadFilter();
-    filter.type="peaking";
-    filter.frequency.value=f;
-    filter.gain.value=0;
-
-    prev.connect(filter);
-    prev=filter;
-    filters.push(filter);
-  });
-
-  prev.connect(analyser);
-  analyser.connect(ctx.destination);
-
-  analyser.fftSize=128;
-  data=new Uint8Array(analyser.frequencyBinCount);
-
-  createEQ();
-}
-
-toggleBtn.onclick=async()=>{
-  initAudio();
-
-  if(audio.paused){
-    audio.src=STREAM+"?t="+Date.now();
-    await audio.play();
-    ctx.resume();
-    statusEl.textContent="ONLINE";
-    toggleBtn.textContent="⏸";
-  }else{
-    audio.pause();
-    statusEl.textContent="OFFLINE";
-    toggleBtn.textContent="▶";
+/* 🔥 ФИКС ВЫСОТЫ ЧАТА (ВАЖНО) */
+setTimeout(()=>{
+  const iframe=document.querySelector("#volnorez_chat iframe");
+  if(iframe){
+    iframe.style.height="100px";
+    iframe.style.width="100%";
   }
-};
-
-volume.oninput=e=>audio.volume=e.target.value;
-
-menuBtn.onclick=()=>document.getElementById("menu").classList.toggle("hidden");
-
-eqBtn.onclick=()=>eqWindow.style.display="block";
-closeEq.onclick=()=>eqWindow.style.display="none";
-
-function createEQ(){
-  const box=document.getElementById("eqBands");
-
-  freqs.forEach((f,i)=>{
-    const d=document.createElement("div");
-    d.className="eq-band";
-
-    const input=document.createElement("input");
-    input.type="range";
-    input.min=-12;
-    input.max=12;
-    input.value=0;
-
-    input.oninput=e=>filters[i].gain.value=e.target.value;
-
-    d.innerHTML=`<span>${f}Hz</span>`;
-    d.appendChild(input);
-    box.appendChild(d);
-  });
-}
-
-function getGradient(h){
-  const g=c.createLinearGradient(0,0,0,h);
-  g.addColorStop(0, highColor.value);
-  g.addColorStop(0.5, midColor.value);
-  g.addColorStop(1, lowColor.value);
-  return g;
-}
-
-let cw,ch;
-
-function resize(){
-  cw=canvas.width=canvas.offsetWidth;
-  ch=canvas.height=canvas.offsetHeight;
-}
-window.addEventListener("resize",resize);
-resize();
-
-let last=0;
-const FPS=30;
-const interval=1000/FPS;
-
-function draw(t){
-  requestAnimationFrame(draw);
-
-  if(!analyser||audio.paused)return;
-  if(t-last<interval)return;
-  last=t;
-
-  analyser.getByteFrequencyData(data);
-
-  c.clearRect(0,0,cw,ch);
-
-  const bars=48;
-  const step=Math.floor(data.length/bars);
-  const barW=cw/bars;
-
-  for(let i=0;i<bars;i++){
-    const v=data[i*step];
-    const h=(v/255)*ch;
-
-    c.fillStyle=getGradient(h);
-    c.fillRect(i*barW,ch-h,barW-2,h);
-  }
-}
-requestAnimationFrame(draw);
-
-function wsConnect(){
-  const ws=new WebSocket(WS_URL);
-
-  ws.onopen=()=>{
-    ws.send(JSON.stringify({cmd:"add_player"}));
-    statusEl.textContent="ONLINE";
-  };
-
-  ws.onmessage=e=>{
-    try{
-      const m=JSON.parse(e.data);
-
-      if(m.cmd==="counter"){
-        listeners.textContent=m.val??0;
-      }
-
-      if(m.cmd==="set_desc"){
-        const d=m.desc||{};
-        dj.textContent=(d.rjs&&d.rjs.join(", "))||"AUTO DJ";
-
-        const title=
-          d.music?.[0]?.title||
-          d.track?.title||
-          d.song?.title||
-          d.title||
-          "LIVE";
-
-        trackText.textContent="🎵 "+title;
-        airDesc.textContent=(d.air_desc&&d.air_desc.trim())||".нет";
-      }
-
-      if(m.cmd==="status"){
-        statusEl.textContent=m.val||"OFFLINE";
-      }
-
-    }catch{}
-  };
-
-  ws.onclose=()=>{
-    statusEl.textContent="RECONNECT";
-    setTimeout(wsConnect,3000);
-  };
-}
-
-wsConnect();
-
-audio.onerror=()=>statusEl.textContent="ERROR";
+},1500);
 </script>
 
 </body>
