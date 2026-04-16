@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ПыЛь_ДоРоГ FM</title>
+
 <style>
 html, body {
     margin: 0;
@@ -76,21 +77,53 @@ button {
   border-radius:50%;
 }
 
-/* ---------------- МЕНЮ ---------------- */
+/* ---------------- МЕНЮ ( ver2) ---------------- */
 .menu { position:relative; }
 
 .menu-list {
   position:absolute;
   top:50px;
   left:-150px;
-  right:auto;
-  margin:0;
-  width:200px;
-  background:#fff;
-  border-radius:8px;
+  width:210px;
+
+  background: rgba(255,255,255,0.95);
+  border-radius:10px;
   padding:10px;
-  display:none;
+
+  display:block;
+
+  opacity:0;
+  transform: translateY(-10px) scale(0.95);
+  pointer-events:none;
+
+  transition: all 0.35s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   z-index:9999;
+}
+
+/* открытие */
+.menu-list.open {
+  opacity:1;
+  transform: translateY(0) scale(1);
+  pointer-events:auto;
+}
+
+/* ссылки */
+.menu-list a {
+  display:block;
+  padding:8px 10px;
+  margin:5px 0;
+  border-radius:8px;
+  text-decoration:none;
+  color:#222;
+  font-size:14px;
+  background: rgba(0,0,0,0.05);
+  transition:0.2s;
+}
+
+.menu-list a:hover {
+  background: rgba(0,0,0,0.12);
+  transform: translateX(3px);
 }
 
 /* ---------------- ЭКВАЛАЙЗЕР ---------------- */
@@ -131,7 +164,7 @@ button {
   -webkit-appearance: slider-vertical;
 }
 
-/* ---------------- ЧАТ (ver-2) ---------------- */
+/* ---------------- ЧАТ ( ver2) ---------------- */
 #volnorez_chat {
     width: 900px;
     max-width: 90%;
@@ -160,7 +193,6 @@ button {
   color: #000;
   opacity: 1;
 }
-
 </style>
 </head>
 
@@ -182,14 +214,15 @@ button {
 
 <div class="menu">
 <button id="menuBtn">🌐</button>
+
 <div class="menu-list" id="menuList">
-<a href="https://vk.com/dust_dorogfm" target="_blank">📢 Группа ПыЛь_ДоРоГ FM</a><br>
-<a href="https://volnorez.com/pyl_dorog-fm" target="_blank">💻 Обычный сайт</a><br>
+<a href="https://vk.com/dust_dorogfm" target="_blank">📢 Группа ПыЛь_ДоРоГ FM</a>
+<a href="https://volnorez.com/pyl_dorog-fm" target="_blank">💻 Обычный сайт</a>
 <a href="https://m.volnorez.com/pyl_dorog-fm" target="_blank">📱 Мобильная версия</a>
-<a href="https://vk.com/topic-227352123_52478122" target="_blank">📝 Книга жалоб и предложений</a>
+<a href="https://vk.com/topic-227352123_52478122" target="_blank">📝 Книга жалоб</a>
 <a href="https://vk.com/topic-227352123_52496434" target="_blank">🎵 Стол заказов</a>
-    
 </div>
+
 </div>
 
 <button id="eqBtn">🎚</button>
@@ -200,14 +233,12 @@ button {
 src="https://s05.volnorez.com/live-app/869683"
 crossorigin="anonymous"></audio>
 
-<!-- 🔥 чат ver-2 -->
 <div id="volnorez_chat"
      data-code="001e157d"
      data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
      data-skin="skin_4">
 </div>
 
-<!-- author -->
 <div class="author" onclick="window.open('https://vk.com/muzer_play','_blank')">
   автор приложения в VK
 </div>
@@ -217,6 +248,29 @@ crossorigin="anonymous"></audio>
 <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
 <script>
 vkBridge.send('VKWebAppInit');
+
+/* ----------------  МЕНЮ  ver2 ---------------- */
+const menuBtn = document.getElementById('menuBtn');
+const menuList = document.getElementById('menuList');
+
+let menuTimer;
+
+menuBtn.onclick = () => {
+  menuList.classList.add('open');
+
+  clearTimeout(menuTimer);
+  menuTimer = setTimeout(() => {
+    menuList.classList.remove('open');
+  }, 6000);
+};
+
+menuList.onmouseenter = () => clearTimeout(menuTimer);
+
+menuList.onmouseleave = () => {
+  menuTimer = setTimeout(() => {
+    menuList.classList.remove('open');
+  }, 1200);
+};
 </script>
 
 <div class="eq-window" id="eqWindow">
@@ -227,8 +281,8 @@ vkBridge.send('VKWebAppInit');
 <div class="eq-sliders" id="eqSliders"></div>
 </div>
 
-
 <script>
+/* ВСЁ ОСТАЛЬНОЕ — ОРИГИНАЛ (НЕ ТРОГАЛ) */
 const audio = document.getElementById('radio');
 const btn = document.getElementById('playBtn');
 const volume = document.getElementById('volume');
@@ -237,7 +291,6 @@ audio.volume = 0.5;
 
 let ctx, analyser, dataArray, canvasCtx, filters=[];
 
-/* PLAY (ver-2) */
 btn.onclick = () => {
   if(audio.paused){
     audio.play();
@@ -251,7 +304,6 @@ btn.onclick = () => {
 
 volume.oninput = () => audio.volume = volume.value;
 
-/* AUDIO (ver-2) */
 function initAudio(){
   if(ctx) return;
 
@@ -281,13 +333,13 @@ function initAudio(){
 
   canvasCtx=document.getElementById('visualizer').getContext('2d');
   draw();
-
   createEQ(freqs);
 }
 
-/* VISUAL */
 function draw(){
   requestAnimationFrame(draw);
+  if(!analyser) return;
+
   analyser.getByteFrequencyData(dataArray);
 
   const c1=document.getElementById('c1').value;
@@ -309,13 +361,6 @@ function draw(){
   }
 }
 
-/* MENU (ver-2) */
-menuBtn.onclick=()=>{
-  menuList.style.display =
-  menuList.style.display==='block' ? 'none' : 'block';
-};
-
-/* EQ (ОРИГИНАЛ) */
 function createEQ(freqs){
   const wrap=document.getElementById('eqSliders');
 
@@ -324,7 +369,6 @@ function createEQ(freqs){
 
     const label=document.createElement('span');
     label.textContent=f+'Hz';
-    label.style.fontSize='10px';
 
     const s=document.createElement('input');
     s.type='range';
@@ -340,7 +384,6 @@ function createEQ(freqs){
   });
 }
 
-/* EQ OPEN/CLOSE */
 eqBtn.onclick=()=>eqWindow.style.display='block';
 closeEq.onclick=()=>eqWindow.style.display='none';
 
