@@ -1,8 +1,328 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>ПыЛь_ДоРоГ FM</title>
+/* ---------------- чат ver-2 ---------------- */
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: linear-gradient(145deg,#e0e0e0,#c0c0c0);
+    font-family: Arial;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    height:100vh;
+}
+
+/* ---------------- КНОПКИ ---------------- */
+button {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+}
+
+/* ---------------- КОНТРОЛЫ ---------------- */
+.controls {
+  display:flex;
+  gap:15px;
+  margin-top:20px;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+/* ---------------- ВИЗУАЛИЗАТОР ---------------- */
+#visualizer {
+  width:420px;
+  height:120px;
+  background: transparent;
+}
+
+/* ---------------- ЦВЕТА ---------------- */
+.color-controls {
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.color-input {
+  width:26px;
+  height:26px;
+  border:none;
+  padding:0;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+  padding:0;
+}
+
+.color-input::-webkit-color-swatch {
+  border:none;
+  border-radius:50%;
+}
+
+/* ---------------- МЕНЮ ---------------- */
+.menu { position:relative; }
+
+.menu-list {
+  position:absolute;
+  top:50px;
+  left:-150px;
+  right:auto;
+  margin:0;
+  width:200px;
+  background:#fff;
+  border-radius:8px;
+  padding:10px;
+  display:none;
+  z-index:9999;
+}
+
+/* ---------------- ЭКВАЛАЙЗЕР ---------------- */
+.eq-window {
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:95%;
+  max-width:900px;
+  background:#8f8f8f;
+  color:#fff;
+  border-radius:10px;
+  padding:15px;
+  display:none;
+  z-index:10000;
+  overflow-x:auto;
+}
+
+.eq-sliders {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  align-items:flex-end;
+  flex-wrap:nowrap;
+}
+
+.eq-sliders div {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-width:45px;
+}
+
+.eq-sliders input {
+  height:100px;
+  width:20px;
+  -webkit-appearance: slider-vertical;
+}
+
+/* ---------------- ЧАТ (1:1 ОРИГИНАЛ) ---------------- */
+#volnorez_chat {
+    width: 900px;
+    max-width: 90%;
+    height: 400px;
+    margin: 20px auto 0;
+    background: linear-gradient(145deg, #e8e8e8, #d6d6d6);
+    border-radius: 12px;
+    box-shadow: 6px 6px 12px rgba(0,0,0,0.3),
+                -3px -3px 6px rgba(255,255,255,0.5);
+    overflow: hidden;
+}
+</style>
+</head>
+
+<body>
+
+<div class="controls">
+
+<button id="playBtn">▶</button>
+
+🔊 <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+
+<canvas id="visualizer"></canvas>
+
+<div class="color-controls">
+  <input type="color" id="c1" class="color-input" value="#6f916f">
+  <input type="color" id="c2" class="color-input" value="#6f916f">
+  <input type="color" id="c3" class="color-input" value="#6f916f">
+</div>
+
+<div class="menu">
+<button id="menuBtn">🌐</button>
+<div class="menu-list" id="menuList">
+<a href="https://google.com" target="_blank">Google</a><br>
+<a href="https://youtube.com" target="_blank">YouTube</a><br>
+<a href="https://vk.com" target="_blank">VK</a>
+</div>
+</div>
+
+<button id="eqBtn">🎚</button>
+
+</div>
+
+<audio id="radio"
+src="https://stream.volnorez.com/live-app/869683?br=128"
+crossorigin="anonymous"></audio>
+
+<!-- 🔥 ЧАТ НЕ ТРОГАЕМ -->
+<div id="volnorez_chat"
+     data-code="001e157d"
+     data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
+     data-skin="skin_4">
+</div>
+
+<script async src="//volnorez.com/plugins/jscode/chat_js"></script>
+
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+<script>
+vkBridge.send('VKWebAppInit');
+</script>
+
+<div class="eq-window" id="eqWindow">
+<div style="display:flex; justify-content:space-between;">
+<span>Эквалайзер</span>
+<span id="closeEq" style="cursor:pointer">❌</span>
+</div>
+
+<div class="eq-sliders" id="eqSliders"></div>
+</div>
+
+<---->
+<div class="author" onclick="window.open('https://vk.com/muzer_play','_blank')">
+  автор приложения для VK
+</div>
+
+<script>
+const audio = document.getElementById('radio');
+const btn = document.getElementById('playBtn');
+const volume = document.getElementById('volume');
+
+audio.volume = 0.5;
+
+let ctx, analyser, dataArray, canvasCtx, filters=[];
+
+/* PLAY (ОРИГИНАЛ 1:1) */
+btn.onclick = () => {
+  if(audio.paused){
+    audio.play();
+    btn.textContent='⏸';
+    initAudio();
+  } else {
+    audio.pause();
+    btn.textContent='▶';
+  }
+};
+
+volume.oninput = () => audio.volume = volume.value;
+
+/* AUDIO (ОРИГИНАЛ) */
+function initAudio(){
+  if(ctx) return;
+
+  ctx = new AudioContext();
+  const source = ctx.createMediaElementSource(audio);
+  analyser = ctx.createAnalyser();
+
+  let prev = source;
+
+  const freqs = [32,64,125,250,500,1000,2000,4000,8000,16000];
+
+  freqs.forEach((f,i)=>{
+    const filter = ctx.createBiquadFilter();
+    filter.type='peaking';
+    filter.frequency.value=f;
+    filter.gain.value=0;
+    prev.connect(filter);
+    prev=filter;
+    filters.push(filter);
+  });
+
+  prev.connect(analyser);
+  analyser.connect(ctx.destination);
+
+  analyser.fftSize=64;
+  dataArray=new Uint8Array(analyser.frequencyBinCount);
+
+  canvasCtx=document.getElementById('visualizer').getContext('2d');
+  draw();
+
+  createEQ(freqs);
+}
+
+/* VISUAL */
+function draw(){
+  requestAnimationFrame(draw);
+  analyser.getByteFrequencyData(dataArray);
+
+  const c1=document.getElementById('c1').value;
+  const c2=document.getElementById('c2').value;
+  const c3=document.getElementById('c3').value;
+
+  canvasCtx.clearRect(0,0,420,120);
+
+  for(let i=0;i<dataArray.length;i++){
+    let h=dataArray[i]/2;
+
+    let grad=canvasCtx.createLinearGradient(0,0,0,120);
+    grad.addColorStop(0,c1);
+    grad.addColorStop(0.5,c2);
+    grad.addColorStop(1,c3);
+
+    canvasCtx.fillStyle=grad;
+    canvasCtx.fillRect(i*5,120-h,4,h);
+  }
+}
+
+/* MENU (ОРИГИНАЛ) */
+menuBtn.onclick=()=>{
+  menuList.style.display =
+  menuList.style.display==='block' ? 'none' : 'block';
+};
+
+/* EQ (ОРИГИНАЛ) */
+function createEQ(freqs){
+  const wrap=document.getElementById('eqSliders');
+
+  freqs.forEach((f,i)=>{
+    const div=document.createElement('div');
+
+    const label=document.createElement('span');
+    label.textContent=f+'Hz';
+    label.style.fontSize='10px';
+
+    const s=document.createElement('input');
+    s.type='range';
+    s.min='-10';
+    s.max='10';
+    s.step='0.1';
+    s.value='0';
+    s.oninput=()=>filters[i].gain.value=s.value;
+
+    div.appendChild(label);
+    div.appendChild(s);
+    wrap.appendChild(div);
+  });
+}
+
+/* EQ OPEN/CLOSE */
+eqBtn.onclick=()=>eqWindow.style.display='block';
+closeEq.onclick=()=>eqWindow.style.display='none';
 
 </script>
 
