@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ПыЛь_ДоРоГ FM</title>
-
+/* ---------------- чат ver-2 ---------------- */
 <style>
 html, body {
     margin: 0;
@@ -68,6 +68,15 @@ button {
   cursor:pointer;
 }
 
+.color-input::-webkit-color-swatch-wrapper {
+  padding:0;
+}
+
+.color-input::-webkit-color-swatch {
+  border:none;
+  border-radius:50%;
+}
+
 /* ---------------- МЕНЮ ---------------- */
 .menu { position:relative; }
 
@@ -75,6 +84,8 @@ button {
   position:absolute;
   top:50px;
   left:-150px;
+  right:auto;
+  margin:0;
   width:200px;
   background:#fff;
   border-radius:8px;
@@ -105,6 +116,7 @@ button {
   justify-content:center;
   gap:10px;
   align-items:flex-end;
+  flex-wrap:nowrap;
 }
 
 .eq-sliders div {
@@ -120,7 +132,7 @@ button {
   -webkit-appearance: slider-vertical;
 }
 
-/* ---------------- ЧАТ ---------------- */
+/* ---------------- ЧАТ (1:1 ОРИГИНАЛ) ---------------- */
 #volnorez_chat {
     width: 900px;
     max-width: 90%;
@@ -149,6 +161,7 @@ button {
   color: #000;
   opacity: 1;
 }
+
 </style>
 </head>
 
@@ -185,7 +198,7 @@ button {
 src="https://stream.volnorez.com/live-app/869683?br=128"
 crossorigin="anonymous"></audio>
 
-<!-- ЧАТ -->
+<!-- 🔥 ЧАТ НЕ ТРОГАЕМ -->
 <div id="volnorez_chat"
      data-code="001e157d"
      data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
@@ -212,6 +225,7 @@ vkBridge.send('VKWebAppInit');
 <div class="eq-sliders" id="eqSliders"></div>
 </div>
 
+
 <script>
 const audio = document.getElementById('radio');
 const btn = document.getElementById('playBtn');
@@ -221,6 +235,7 @@ audio.volume = 0.5;
 
 let ctx, analyser, dataArray, canvasCtx, filters=[];
 
+/* PLAY (ОРИГИНАЛ 1:1) */
 btn.onclick = () => {
   if(audio.paused){
     audio.play();
@@ -234,6 +249,7 @@ btn.onclick = () => {
 
 volume.oninput = () => audio.volume = volume.value;
 
+/* AUDIO (ОРИГИНАЛ) */
 function initAudio(){
   if(ctx) return;
 
@@ -267,6 +283,7 @@ function initAudio(){
   createEQ(freqs);
 }
 
+/* VISUAL */
 function draw(){
   requestAnimationFrame(draw);
   analyser.getByteFrequencyData(dataArray);
@@ -290,11 +307,13 @@ function draw(){
   }
 }
 
+/* MENU (ОРИГИНАЛ) */
 menuBtn.onclick=()=>{
   menuList.style.display =
   menuList.style.display==='block' ? 'none' : 'block';
 };
 
+/* EQ (ОРИГИНАЛ) */
 function createEQ(freqs){
   const wrap=document.getElementById('eqSliders');
 
@@ -319,8 +338,10 @@ function createEQ(freqs){
   });
 }
 
+/* EQ OPEN/CLOSE */
 eqBtn.onclick=()=>eqWindow.style.display='block';
 closeEq.onclick=()=>eqWindow.style.display='none';
+
 </script>
 
 </body>
