@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>ПыЛь_ДоРоГ FM</title>
-/* ---------------- чат ver-2 ---------------- */
 <style>
 html, body {
     margin: 0;
@@ -132,7 +131,7 @@ button {
   -webkit-appearance: slider-vertical;
 }
 
-/* ---------------- ЧАТ (1:1 ОРИГИНАЛ) ---------------- */
+/* ---------------- ЧАТ (ver-2) ---------------- */
 #volnorez_chat {
     width: 900px;
     max-width: 90%;
@@ -198,7 +197,7 @@ button {
 src="https://stream.volnorez.com/live-app/869683?br=128"
 crossorigin="anonymous"></audio>
 
-<!-- 🔥 ЧАТ НЕ ТРОГАЕМ -->
+<!-- 🔥 чат ver-2 -->
 <div id="volnorez_chat"
      data-code="001e157d"
      data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
@@ -235,7 +234,7 @@ audio.volume = 0.5;
 
 let ctx, analyser, dataArray, canvasCtx, filters=[];
 
-/* PLAY (ОРИГИНАЛ 1:1) */
+/* PLAY (ver-2) */
 btn.onclick = () => {
   if(audio.paused){
     audio.play();
@@ -249,7 +248,7 @@ btn.onclick = () => {
 
 volume.oninput = () => audio.volume = volume.value;
 
-/* AUDIO (ОРИГИНАЛ) */
+/* AUDIO (ver-2) */
 function initAudio(){
   if(ctx) return;
 
@@ -307,7 +306,7 @@ function draw(){
   }
 }
 
-/* MENU (ОРИГИНАЛ) */
+/* MENU (ver-2) */
 menuBtn.onclick=()=>{
   menuList.style.display =
   menuList.style.display==='block' ? 'none' : 'block';
