@@ -362,7 +362,7 @@
       prev.connect(analyser);
       analyser.connect(ctx.destination);
 
-      analyser.fftSize=64;
+      analyser.fftSize=256;
       dataArray=new Uint8Array(analyser.frequencyBinCount);
 
       canvasCtx=document.getElementById('visualizer').getContext('2d');
