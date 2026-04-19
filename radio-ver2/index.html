@@ -21,6 +21,38 @@
       height: 100vh;
     }
 
+    /* ---------------- LOADER ---------------- */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #cfcfcf;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 0.6s ease;
+    }
+
+    #loader img {
+      width: auto;
+      height: auto;
+      animation: pulse 1.2s 1 ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.7; }
+    }
+
+    #loader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
     /* ---------------- КНОПКИ ---------------- */
     button {
       width: 44px;
@@ -77,7 +109,6 @@
       border-radius: 50%;
     }
 
-   /* ⭐ ДОБАВЛЕНО: подписи */
     .color-box {
       display: flex;
       flex-direction: column;
@@ -91,8 +122,7 @@
       opacity: 0.7;
     }
 
-
-    /* ---------------- МЕНЮ (ver2) ---------------- */
+    /* ---------------- МЕНЮ ---------------- */
     .menu {
       position: relative;
       display: flex;
@@ -117,14 +147,12 @@
       z-index: 9999;
     }
 
-    /* открытие */
     .menu-list.open {
       opacity: 1;
       transform: translateY(0) scale(1);
       pointer-events: auto;
     }
 
-    /* ссылки */
     .menu-list a {
       display: block;
       padding: 8px 10px;
@@ -180,7 +208,7 @@
       -webkit-appearance: slider-vertical;
     }
 
-    /* ---------------- ЧАТ (ver2) ---------------- */
+    /* ---------------- ЧАТ ---------------- */
     #volnorez_chat {
       width: 900px;
       max-width: 90%;
@@ -193,7 +221,7 @@
       overflow: hidden;
     }
 
-    /* ---------------- author ---------------- */
+    /* ---------------- AUTHOR ---------------- */
     .author {
       width: 900px;
       max-width: 90%;
@@ -222,205 +250,226 @@
 
 <body>
 
-  <div class="controls">
+<!-- LOADER -->
+<div id="loader">
+  <img src="loader.png" alt="Loading...">
+</div>
 
-    <button id="playBtn">▶</button>
+<div class="controls">
 
-    🔊 <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+  <button id="playBtn">▶</button>
 
-    <canvas id="visualizer"></canvas>
-<div class="color-controls">
+  🔊 <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
 
-  <div class="color-box">
-    <div class="color-label">1</div>
-    <input type="color" id="c1" class="color-input" value="#b22424">
+  <canvas id="visualizer"></canvas>
+
+  <div class="color-controls">
+
+    <div class="color-box">
+      <div class="color-label">1</div>
+      <input type="color" id="c1" class="color-input" value="#b22424">
+    </div>
+
+    <div class="color-box">
+      <div class="color-label">2</div>
+      <input type="color" id="c2" class="color-input" value="#6f916f">
+    </div>
+
+    <div class="color-box">
+      <div class="color-label">3</div>
+      <input type="color" id="c3" class="color-input" value="#6f916f">
+    </div>
+
   </div>
 
-  <div class="color-box">
-    <div class="color-label">2</div>
-    <input type="color" id="c2" class="color-input" value="#6f916f">
+  <div class="menu">
+    <img src="logo-R.gif" id="logoGif">
+    <button id="menuBtn">🌐</button>
+
+    <div class="menu-list" id="menuList">
+      <a href="https://vk.com/dust_dorogfm" target="_blank">📢 Группа ПыЛь_ДоРоГ FM</a>
+      <a href="https://volnorez.com/pyl_dorog-fm" target="_blank">💻 Обычный сайт</a>
+      <a href="https://m.volnorez.com/pyl_dorog-fm" target="_blank">📱 Мобильная версия</a>
+      <a href="https://vk.com/topic-227352123_52478122" target="_blank">📝 Книга жалоб</a>
+      <a href="https://vk.com/topic-227352123_52496434" target="_blank">🎵 Стол заказов</a>
+    </div>
   </div>
 
-  <div class="color-box">
-    <div class="color-label">3</div>
-    <input type="color" id="c3" class="color-input" value="#6f916f">
-  </div>
+  <button id="eqBtn">🎚</button>
 
 </div>
 
-    <div class="menu">
-      <!-- Логотип GIF -->
-      <img src="logo-R.gif" id="logoGif" alt="Логотип">
-      <!-- Кнопка меню -->
-      <button id="menuBtn">🌐</button>
+<audio id="radio" src="https://s05.volnorez.com/live-app/869683" crossorigin="anonymous"></audio>
 
-      <div class="menu-list" id="menuList">
-        <a href="https://vk.com/dust_dorogfm" target="_blank">📢 Группа ПыЛь_ДоРоГ FM</a>
-        <a href="https://volnorez.com/pyl_dorog-fm" target="_blank">💻 Обычный сайт</a>
-        <a href="https://m.volnorez.com/pyl_dorog-fm" target="_blank">📱 Мобильная версия</a>
-        <a href="https://vk.com/topic-227352123_52478122" target="_blank">📝 Книга жалоб</a>
-        <a href="https://vk.com/topic-227352123_52496434" target="_blank">🎵 Стол заказов</a>
-      </div>
-    </div>
+<div id="volnorez_chat"
+     data-code="001e157d"
+     data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
+     data-skin="skin_4">
+</div>
 
-    <button id="eqBtn">🎚</button>
+<div class="author" onclick="window.open('https://vk.com/muzer_play','_blank')">
+  /автор приложения-V2/в VK
+</div>
 
+<script async src="//volnorez.com/plugins/jscode/chat_js"></script>
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+
+<script>
+vkBridge.send('VKWebAppInit');
+
+/* LOADER */
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+
+  setTimeout(() => {
+    loader.classList.add("hide");
+
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 300);
+
+  }, 300);
+});
+</script>
+
+<!-- дальше твой JS без изменений -->
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const menuList = document.getElementById('menuList');
+
+let menuTimer;
+
+menuBtn.onclick = () => {
+  menuList.classList.add('open');
+  clearTimeout(menuTimer);
+
+  menuTimer = setTimeout(() => {
+    menuList.classList.remove('open');
+  }, 6000);
+};
+
+menuList.onmouseenter = () => clearTimeout(menuTimer);
+
+menuList.onmouseleave = () => {
+  menuTimer = setTimeout(() => {
+    menuList.classList.remove('open');
+  }, 1200);
+};
+</script>
+
+<div class="eq-window" id="eqWindow">
+  <div style="display:flex; justify-content:space-between;">
+    <span>Эквалайзер</span>
+    <span id="closeEq" style="cursor:pointer">❌</span>
   </div>
+  <div class="eq-sliders" id="eqSliders"></div>
+</div>
 
-  <audio id="radio" src="https://s05.volnorez.com/live-app/869683" crossorigin="anonymous"></audio>
+<script>
+const audio = document.getElementById('radio');
+const btn = document.getElementById('playBtn');
+const volume = document.getElementById('volume');
 
-  <div id="volnorez_chat"
-       data-code="001e157d"
-       data-skin-params="'bg_clr':'222,222,222','panel_clr':'216,216,216','ib_clr':'250,250,250','msgbg_clr':'238,238,238','omsgbg_clr':'229,229,229','txt_clr':'18,18,18','b_clr':'145,145,145','icon_clr':'120,120,120','label_clr':'60,61,61','dj_clr':'63,191,7'"
-       data-skin="skin_4">
-  </div>
+audio.volume = 0.5;
 
-  <div class="author" onclick="window.open('https://vk.com/muzer_play','_blank')">
-    /автор приложения-V2/в VK
-  </div>
+let ctx, analyser, dataArray, canvasCtx, filters=[];
 
-  <script async src="//volnorez.com/plugins/jscode/chat_js"></script>
-  <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
-  <script>
-    vkBridge.send('VKWebAppInit');
+btn.onclick = () => {
+  if(audio.paused){
+    audio.play();
+    btn.textContent='⏸';
+    initAudio();
+  } else {
+    audio.pause();
+    btn.textContent='▶';
+  }
+};
 
-    /* ----------------  МЕНЮ  ver2 ---------------- */
-    const menuBtn = document.getElementById('menuBtn');
-    const menuList = document.getElementById('menuList');
+volume.oninput = () => audio.volume = volume.value;
 
-    let menuTimer;
+function initAudio(){
+  if(ctx) return;
 
-    menuBtn.onclick = () => {
-      menuList.classList.add('open');
+  ctx = new AudioContext();
+  const source = ctx.createMediaElementSource(audio);
+  analyser = ctx.createAnalyser();
 
-      clearTimeout(menuTimer);
-      menuTimer = setTimeout(() => {
-        menuList.classList.remove('open');
-      }, 6000);
-    };
+  let prev = source;
 
-    menuList.onmouseenter = () => clearTimeout(menuTimer);
+  const freqs = [32,64,125,250,500,1000,2000,4000,8000,16000];
 
-    menuList.onmouseleave = () => {
-      menuTimer = setTimeout(() => {
-        menuList.classList.remove('open');
-      }, 1200);
-    };
-  </script>
+  freqs.forEach((f,i)=>{
+    const filter = ctx.createBiquadFilter();
+    filter.type='peaking';
+    filter.frequency.value=f;
+    filter.gain.value=0;
+    prev.connect(filter);
+    prev=filter;
+    filters.push(filter);
+  });
 
-  <div class="eq-window" id="eqWindow">
-    <div style="display:flex; justify-content:space-between;">
-      <span>Эквалайзер</span>
-      <span id="closeEq" style="cursor:pointer">❌</span>
-    </div>
-    <div class="eq-sliders" id="eqSliders"></div>
-  </div>
+  prev.connect(analyser);
+  analyser.connect(ctx.destination);
 
-  <script>
-    const audio = document.getElementById('radio');
-    const btn = document.getElementById('playBtn');
-    const volume = document.getElementById('volume');
+  analyser.fftSize=256;
+  dataArray=new Uint8Array(analyser.frequencyBinCount);
 
-    audio.volume = 0.5;
+  canvasCtx=document.getElementById('visualizer').getContext('2d');
+  draw();
+  createEQ(freqs);
+}
 
-    let ctx, analyser, dataArray, canvasCtx, filters=[];
+function draw(){
+  requestAnimationFrame(draw);
+  if(!analyser) return;
 
-    btn.onclick = () => {
-      if(audio.paused){
-        audio.play();
-        btn.textContent='⏸';
-        initAudio();
-      } else {
-        audio.pause();
-        btn.textContent='▶';
-      }
-    };
+  analyser.getByteFrequencyData(dataArray);
 
-    volume.oninput = () => audio.volume = volume.value;
+  const c1=document.getElementById('c1').value;
+  const c2=document.getElementById('c2').value;
+  const c3=document.getElementById('c3').value;
 
-    function initAudio(){
-      if(ctx) return;
+  canvasCtx.clearRect(0,0,420,120);
 
-      ctx = new AudioContext();
-      const source = ctx.createMediaElementSource(audio);
-      analyser = ctx.createAnalyser();
+  for(let i=0;i<dataArray.length;i++){
+    let h=dataArray[i]/2;
 
-      let prev = source;
+    let grad=canvasCtx.createLinearGradient(0,0,0,120);
+    grad.addColorStop(0,c1);
+    grad.addColorStop(0.5,c2);
+    grad.addColorStop(1,c3);
 
-      const freqs = [32,64,125,250,500,1000,2000,4000,8000,16000];
+    canvasCtx.fillStyle=grad;
+    canvasCtx.fillRect(i*5,120-h,4,h);
+  }
+}
 
-      freqs.forEach((f,i)=>{
-        const filter = ctx.createBiquadFilter();
-        filter.type='peaking';
-        filter.frequency.value=f;
-        filter.gain.value=0;
-        prev.connect(filter);
-        prev=filter;
-        filters.push(filter);
-      });
+function createEQ(freqs){
+  const wrap=document.getElementById('eqSliders');
 
-      prev.connect(analyser);
-      analyser.connect(ctx.destination);
+  freqs.forEach((f,i)=>{
+    const div=document.createElement('div');
 
-      analyser.fftSize=256;
-      dataArray=new Uint8Array(analyser.frequencyBinCount);
+    const label=document.createElement('span');
+    label.textContent=f+'Hz';
 
-      canvasCtx=document.getElementById('visualizer').getContext('2d');
-      draw();
-      createEQ(freqs);
-    }
+    const s=document.createElement('input');
+    s.type='range';
+    s.min='-10';
+    s.max='10';
+    s.step='0.1';
+    s.value='0';
+    s.oninput=()=>filters[i].gain.value=s.value;
 
-    function draw(){
-      requestAnimationFrame(draw);
-      if(!analyser) return;
+    div.appendChild(label);
+    div.appendChild(s);
+    wrap.appendChild(div);
+  });
+}
 
-      analyser.getByteFrequencyData(dataArray);
-
-      const c1=document.getElementById('c1').value;
-      const c2=document.getElementById('c2').value;
-      const c3=document.getElementById('c3').value;
-
-      canvasCtx.clearRect(0,0,420,120);
-
-      for(let i=0;i<dataArray.length;i++){
-        let h=dataArray[i]/2;
-
-        let grad=canvasCtx.createLinearGradient(0,0,0,120);
-        grad.addColorStop(0,c1);
-        grad.addColorStop(0.5,c2);
-        grad.addColorStop(1,c3);
-
-        canvasCtx.fillStyle=grad;
-        canvasCtx.fillRect(i*5,120-h,4,h);
-      }
-    }
-
-    function createEQ(freqs){
-      const wrap=document.getElementById('eqSliders');
-
-      freqs.forEach((f,i)=>{
-        const div=document.createElement('div');
-
-        const label=document.createElement('span');
-        label.textContent=f+'Hz';
-
-        const s=document.createElement('input');
-        s.type='range';
-        s.min='-10';
-        s.max='10';
-        s.step='0.1';
-        s.value='0';
-        s.oninput=()=>filters[i].gain.value=s.value;
-
-        div.appendChild(label);
-        div.appendChild(s);
-        wrap.appendChild(div);
-      });
-    }
-
-    eqBtn.onclick=()=>eqWindow.style.display='block';
-    closeEq.onclick=()=>eqWindow.style.display='none';
-  </script>
+eqBtn.onclick=()=>eqWindow.style.display='block';
+closeEq.onclick=()=>eqWindow.style.display='none';
+</script>
 
 </body>
 </html>
