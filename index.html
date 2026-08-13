@@ -23,27 +23,43 @@
             display: block;
         }
 
-        /* Автор приложения */
-        .author {
+        /* Нижняя серая полоска */
+        .bottom-bar {
             position: fixed;
-            left: 8px;
-            bottom: 6px;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 28px;
+
+            background: #555;
             z-index: 9999;
 
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            box-sizing: border-box;
+            padding-left: 10px;
+        }
+
+        /* Автор приложения */
+        .author {
             font-family: Arial, sans-serif;
             font-size: 10px;
             font-weight: 400;
             text-decoration: none;
 
             color: transparent;
+
             background: linear-gradient(
                 90deg,
-                #888,
+                #aaa,
                 #fff,
-                #888,
+                #aaa,
                 #fff,
-                #888
+                #aaa
             );
+
             background-size: 300% 100%;
 
             -webkit-background-clip: text;
@@ -51,10 +67,11 @@
 
             animation: wave 3s linear infinite;
 
-            opacity: 0.75;
             cursor: pointer;
+        }
 
-            padding: 3px 5px;
+        .author:hover {
+            opacity: 1;
         }
 
         @keyframes wave {
@@ -66,10 +83,6 @@
                 background-position: 300% 50%;
             }
         }
-
-        .author:hover {
-            opacity: 1;
-        }
     </style>
 </head>
 
@@ -80,14 +93,16 @@
         src="https://m.volnorez.com/pyl_dorog-fm">
     </iframe>
 
-    <!-- Нажатие открывает сайт -->
-    <a
-        class="author"
-        href="https://vk.ru/muzer_play"
-        target="_blank"
-        rel="noopener noreferrer">
-        Автор приложения
-    </a>
+    <!-- Нижняя панель -->
+    <div class="bottom-bar">
+        <a
+            class="author"
+            href="https://vk.ru/muzer_play"
+            target="_blank"
+            rel="noopener noreferrer">
+            Автор приложения
+        </a>
+    </div>
 
     <script>
         async function initApp() {
