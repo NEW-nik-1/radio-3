@@ -14,19 +14,84 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            background: #000;
         }
 
-        /* Сайт занимает всё место ДО нижней полоски */
+        /* Радио занимает всё место до нижней полоски */
         #volnorez {
             position: fixed;
             top: 0;
             left: 0;
-
-            width: 100vw;
+            width: 100%;
             height: calc(100vh - 28px);
-
             border: none;
             display: block;
+        }
+
+        /* Контейнер лампочек сверху */
+        .lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 10000;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* Маленькие светящиеся лампочки */
+        .light {
+            width: 5px;
+            height: 5px;
+            min-width: 5px;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: blink 1.2s infinite alternate ease-in-out;
+        }
+
+        /* Красные лампочки */
+        .light:nth-child(4n + 1) {
+            background: #ff3030;
+            box-shadow: 0 0 6px 2px #ff3030;
+            animation-delay: 0s;
+        }
+
+        /* Зелёные лампочки */
+        .light:nth-child(4n + 2) {
+            background: #00ff88;
+            box-shadow: 0 0 6px 2px #00ff88;
+            animation-delay: 0.3s;
+        }
+
+        /* Синие лампочки */
+        .light:nth-child(4n + 3) {
+            background: #00bfff;
+            box-shadow: 0 0 6px 2px #00bfff;
+            animation-delay: 0.6s;
+        }
+
+        /* Жёлтые лампочки */
+        .light:nth-child(4n) {
+            background: #ffea00;
+            box-shadow: 0 0 6px 2px #ffea00;
+            animation-delay: 0.9s;
+        }
+
+        /* Анимация мигания */
+        @keyframes blink {
+            0% {
+                opacity: 0.25;
+                transform: scale(0.7);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
         }
 
         /* Нижняя серая полоска */
@@ -34,18 +99,13 @@
             position: fixed;
             left: 0;
             bottom: 0;
-
             width: 100%;
             height: 28px;
-
             background: #262626;
-
-            z-index: 9999;
-
+            z-index: 10001;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-
             box-sizing: border-box;
             padding-left: 10px;
         }
@@ -56,9 +116,7 @@
             font-size: 10px;
             font-weight: 400;
             text-decoration: none;
-
             color: transparent;
-
             background: linear-gradient(
                 90deg,
                 #aaa,
@@ -67,17 +125,14 @@
                 #fff,
                 #aaa
             );
-
             background-size: 300% 100%;
-
             -webkit-background-clip: text;
             background-clip: text;
-
             animation: wave 3s linear infinite;
-
             cursor: pointer;
         }
 
+        /* Переливающийся текст автора */
         @keyframes wave {
             0% {
                 background-position: 0% 50%;
@@ -92,11 +147,40 @@
 
 <body>
 
+    <!-- Разноцветные мигающие лампочки -->
+    <div class="lights" aria-hidden="true">
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+        <span class="light"></span>
+    </div>
+
+    <!-- Радиостанция -->
     <iframe
         id="volnorez"
-        src="https://m.volnorez.com/pyl_dorog-fm">
+        src="https://m.volnorez.com/pyl_dorog-fm"
+        title="Радио Volnorez"
+        allow="autoplay"
+        loading="eager">
     </iframe>
 
+    <!-- Нижняя полоска с автором -->
     <div class="bottom-bar">
         <a
             class="author"
@@ -107,6 +191,7 @@
         </a>
     </div>
 
+    <!-- Инициализация VK Bridge -->
     <script>
         async function initApp() {
             try {
